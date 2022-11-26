@@ -1,0 +1,47 @@
+
+1 vim dockerfile
+FROM  centos
+MAINTAINER intelliqit
+RUN yum update -y
+RUN yum install -y httpd
+COPY index.html /var/www/html
+ENTRYPOINT ["/usr/sbin/httpd","-D","FOREGROUND"]
+EXPOSE 80
+
+2 Create an image from the above file
+  docker build -t mycentos .
+
+3 Create a container
+  docker run -d --name c1 -p 9090:80 mycentos
+
+4 Check the deafult command that is triggered by this container
+  docker container ls
+  We will see that hhtpd -D FOREGROUND is triggered
+
+5 To access the default home page of this container
+  Launch any browser
+  public_ip_of_dockerhost:9090
+
+
+==============================================================================
+
+Create a dockerfile from ubuntu base image and 
+install nginx in it,When we start a contianer from
+this image it should start nginx
+
+1 vim dockerfile
+FROM  ubuntu
+MAINTAINER intelliqit
+RUN apt-get update
+RUN apt-get install -y nginx
+ENTRYPOINT ["/usr/sbin/nginx","-g","daemon off;"]
+EXPOSE 80
+
+2 Create an image from this dockerfile
+  docker build -t myubuntu .
+
+3 Create a container from the above image
+  docker run --name u1 -d -p 7070:80 myubuntu
+
+4 To access the nginx from browser
+  public_ip:7070

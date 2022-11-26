@@ -1,0 +1,92 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: intelliqit
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
+
+=====================================================================
+ docker network create --driver=bridge --subnet=192.168.2.0/24 mynet
+
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: intelliqit
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
+networks:
+ default:
+  external:
+   name: mynet
+
+======================================================================
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+     - abc
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: intelliqit
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+     - xyz
+
+volumes:
+  wordpress:
+  db:
+networks:
+ abc: {}
+ xyz: {}
+
+
+
+
+
+
